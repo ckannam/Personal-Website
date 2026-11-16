@@ -4,14 +4,15 @@ import type { GraphNode, GraphLink } from '../data/graph';
 
 type Props = { nodes: GraphNode[]; links: GraphLink[] };
 
+// muted lobe fills (match global.css)
 const LOBE_COLOR: Record<string, string> = {
-  neuro: '#c879e6',
-  venture: '#3dd6c4',
-  ai: '#f5b041',
-  center: '#ffffff',
+  neuro: '#8b5cf6',
+  venture: '#0fb5a5',
+  ai: '#e0912f',
+  center: '#14161b',
 };
 
-const NODE_R = (lobe: string) => (lobe === 'center' ? 9 : lobe === 'ai' ? 7 : 5.5);
+const NODE_R = (lobe: string) => (lobe === 'center' ? 7.5 : lobe === 'ai' ? 6 : 5);
 
 export default function GraphHero({ nodes, links }: Props) {
   const fgRef = useRef<ForceGraphMethods | undefined>(undefined);
@@ -22,17 +23,11 @@ export default function GraphHero({ nodes, links }: Props) {
     typeof window !== 'undefined' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // signal-propagation reveal: edges light up over the first ~1.6s unless reduced-motion
-  const [t0] = useState(() => (typeof performance !== 'undefined' ? performance.now() : 0));
-  const [lit, setLit] = useState(reduced ? 1 : 0);
-
-  // clone data so the lib can mutate x/y freely
   const data = useMemo(
     () => ({ nodes: nodes.map((n) => ({ ...n })), links: links.map((l) => ({ ...l })) }),
     [nodes, links],
   );
 
-  // adjacency for hover highlighting
   const adj = useMemo(() => {
     const m = new Map<string, Set<string>>();
     for (const n of nodes) m.set(n.id, new Set());
@@ -52,26 +47,16 @@ export default function GraphHero({ nodes, links }: Props) {
     return () => ro.disconnect();
   }, []);
 
-  useEffect(() => {
-    if (reduced) return;
-    let raf = 0;
-    const tick = () => {
-      const p = Math.min(1, (performance.now() - t0) / 1600);
-      setLit(p);
-      if (p < 1) raf = requestAnimationFrame(tick);
-    };
-    raf = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(raf);
-  }, [reduced, t0]);
-
-  // spread the graph a bit so lobes separate
+  // spread lobes, then let it settle and stop (calm — no perpetual drift)
   useEffect(() => {
     const fg = fgRef.current;
     if (!fg) return;
-    fg.d3Force('charge')?.strength(-170);
+    fg.d3Force('charge')?.strength(-120);
     const lf = fg.d3Force('link');
-    lf?.distance((l: GraphLink) => (l.source === 'cole' || (l as any).source?.id === 'cole' ? 90 : 55));
-    fg.d3ReheatSimulation?.();
+    lf?.distance((l: any) => {
+      const s = typeof l.source === 'object' ? l.source.id : l.source;
+      return s === 'cole' ? 70 : 42;
+    });
   }, [size.w]);
 
   const isActive = useCallback(
@@ -79,11 +64,15 @@ export default function GraphHero({ nodes, links }: Props) {
     [hover, adj],
   );
 
-  const onClick = useCallback((node: GraphNode) => {
-    if (node.id === 'cole') return;
-    const el = document.getElementById(`node-${node.id}`);
-    el?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
-  }, [reduced]);
+  const onClick = useCallback(
+    (node: GraphNode) => {
+      if (node.id === 'cole') return;
+      document
+        .getElementById(`node-${node.id}`)
+        ?.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
+    },
+    [reduced],
+  );
 
   if (size.w === 0) return <div ref={wrapRef} style={{ position: 'absolute', inset: 0 }} />;
 
@@ -95,8 +84,11 @@ export default function GraphHero({ nodes, links }: Props) {
         height={size.h}
         graphData={data}
         backgroundColor="rgba(0,0,0,0)"
-        cooldownTicks={120}
+        cooldownTicks={reduced ? 0 : 90}
+        warmupTicks={reduced ? 120 : 0}
+        d3AlphaDecay={0.05}
         enableNodeDrag={true}
+        onEngineStop={() => fgRef.current?.zoomToFit(reduced ? 0 : 400, 56)}
         onNodeHover={(n: any) => setHover(n ? n.id : null)}
         onNodeClick={onClick as any}
         nodeRelSize={1}
@@ -104,35 +96,32 @@ export default function GraphHero({ nodes, links }: Props) {
           const src = typeof l.source === 'object' ? l.source.id : l.source;
           const tgt = typeof l.target === 'object' ? l.target.id : l.target;
           const active = !hover || hover === src || hover === tgt;
-          const spine = l.spine;
-          const base = spine ? 'rgba(245,176,65,' : 'rgba(120,130,170,';
-          const a = (spine ? 0.55 : 0.28) * (active ? 1 : 0.18) * (spine ? lit : 1);
-          return `${base}${a})`;
+          return active ? 'rgba(120,128,142,0.45)' : 'rgba(120,128,142,0.12)';
         }}
-        linkWidth={(l: any) => (l.spine ? 1.6 : 0.8)}
+        linkWidth={(l: any) => (l.spine ? 1.3 : 0.8)}
         nodeCanvasObject={(node: any, ctx, scale) => {
           const color = LOBE_COLOR[node.lobe] ?? '#888';
           const r = NODE_R(node.lobe);
           const active = isActive(node.id);
-          ctx.globalAlpha = active ? 1 : 0.22;
+          ctx.globalAlpha = active ? 1 : 0.28;
 
-          // glow
           ctx.beginPath();
           ctx.arc(node.x, node.y, r, 0, 2 * Math.PI);
           ctx.fillStyle = color;
-          ctx.shadowColor = color;
-          ctx.shadowBlur = node.lobe === 'center' ? 22 : 12;
           ctx.fill();
-          ctx.shadowBlur = 0;
+          // thin ring for crispness on light bg
+          ctx.lineWidth = 1 / scale;
+          ctx.strokeStyle = 'rgba(255,255,255,0.9)';
+          ctx.stroke();
 
-          // label when zoomed-in enough or hovered/active
-          if (scale > 1.2 || (hover && active)) {
-            const label = node.title as string;
+          // calm default: only the center is labelled; hovering reveals a node + its neighbours
+          const showLabel = node.lobe === 'center' || (hover && active);
+          if (showLabel) {
             ctx.font = `500 ${11 / scale}px 'General Sans', sans-serif`;
-            ctx.fillStyle = '#e8eaf2';
+            ctx.fillStyle = '#14161b';
             ctx.textAlign = 'center';
             ctx.textBaseline = 'top';
-            ctx.fillText(label, node.x, node.y + r + 3 / scale);
+            ctx.fillText(node.title as string, node.x, node.y + r + 3 / scale);
           }
           ctx.globalAlpha = 1;
         }}

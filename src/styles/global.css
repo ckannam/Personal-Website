@@ -1,150 +1,173 @@
 /* ============================================================
-   Neuro × AI — a connectome. Dark scan field, two lobe tints,
-   one amber signal. Tokens first.
+   Neuro × AI — calm editorial. Light scan-white field, ink text,
+   one violet accent. The graph is the hero, but quiet.
    ============================================================ */
 :root {
-  --bg: #0a0e1a;
-  --bg-2: #111733;
-  --panel: #161d3b;
-  --ink: #e8eaf2;
-  --muted: #8a90a8;
-  --line: #243056;
+  --bg: #f7f8fa;
+  --surface: #ffffff;
+  --ink: #14161b;
+  --muted: #6b7280;
+  --faint: #9aa1ad;
+  --line: #e6e8ec;
+  --line-strong: #d3d7de;
 
-  --neuro: #c879e6;   /* the brain — stain violet */
-  --venture: #3dd6c4; /* the market — cool teal   */
-  --ai: #f5b041;      /* the signal — amber       */
-  --center: #ffffff;  /* Cole, the hub            */
+  --accent: #6d4ac4;        /* single brand accent — neuro violet */
+  --accent-soft: #efeafb;
 
-  --font-display: 'Clash Display', 'General Sans', system-ui, sans-serif;
+  /* muted lobe tints, used only as small node fills in the graph */
+  --neuro: #8b5cf6;
+  --venture: #0fb5a5;
+  --ai: #e0912f;
+  --center: #14161b;
+
+  --font-display: 'Clash Grotesk', 'General Sans', system-ui, sans-serif;
   --font-body: 'General Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'Space Mono', ui-monospace, 'SF Mono', Menlo, monospace;
 
-  --measure: 62ch;
+  --wrap: 1120px;
 }
 
 *,
 *::before,
-*::after {
-  box-sizing: border-box;
-}
+*::after { box-sizing: border-box; }
 
-html {
-  -webkit-text-size-adjust: 100%;
-}
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   margin: 0;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body);
-  font-size: clamp(1rem, 0.95rem + 0.3vw, 1.125rem);
-  line-height: 1.65;
-  font-weight: 400;
+  font-size: 1.0625rem;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-h1,
-h2,
-h3 {
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+h1, h2, h3 {
   font-family: var(--font-display);
   font-weight: 600;
-  line-height: 1.05;
-  letter-spacing: -0.015em;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
   margin: 0;
 }
 
-a {
-  color: inherit;
-}
+a { color: inherit; text-decoration: none; }
 
 :focus-visible {
-  outline: 2px solid var(--ai);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 2px;
 }
 
-/* ---------- HERO ---------- */
-.hero {
-  position: relative;
-  min-height: 100svh;
-  width: 100%;
-  overflow: hidden;
+.wrap {
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 5vw, 2.5rem);
 }
 
-.hero__graph {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.hero__id {
-  position: absolute;
-  z-index: 2;
-  top: clamp(1.5rem, 5vh, 4rem);
-  left: clamp(1.25rem, 5vw, 4.5rem);
-  max-width: 34ch;
-  pointer-events: none;
-}
-
-.hero__name {
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: 0.95rem;
+/* label / eyebrow — mono, sentence-spaced, not shouty all-caps everywhere */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
   color: var(--muted);
-  margin: 0 0 0.9rem;
-}
-
-.hero__headline {
-  font-size: clamp(2.3rem, 1.6rem + 3.6vw, 4.6rem);
   margin: 0;
 }
-.hero__headline .neuro { color: var(--neuro); }
-.hero__headline .ai { color: var(--ai); }
 
-.hero__sub {
-  margin: 1.1rem 0 0;
-  max-width: 32ch;
-  color: var(--muted);
-  font-size: 1.05rem;
-  line-height: 1.55;
+/* ---------- NAV ---------- */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: color-mix(in srgb, var(--bg) 86%, transparent);
+  backdrop-filter: saturate(1.1) blur(8px);
+  border-bottom: 1px solid var(--line);
 }
-
-/* legend + hint sit bottom-left, quiet */
-.hero__foot {
-  position: absolute;
-  z-index: 2;
-  bottom: clamp(1.25rem, 4vh, 3rem);
-  left: clamp(1.25rem, 5vw, 4.5rem);
+.nav__in {
+  max-width: var(--wrap);
+  margin-inline: auto;
+  padding: 0.9rem clamp(1.25rem, 5vw, 2.5rem);
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem 1.4rem;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.nav__brand { font-family: var(--font-display); font-weight: 600; font-size: 1.05rem; }
+.nav__tag { font-family: var(--font-mono); font-size: 0.72rem; color: var(--faint); margin-left: 0.6rem; }
+.nav__links { display: flex; gap: clamp(1rem, 3vw, 2rem); font-size: 0.95rem; }
+.nav__links a { color: var(--muted); padding-bottom: 2px; border-bottom: 1.5px solid transparent; }
+.nav__links a:hover { color: var(--ink); border-color: var(--accent); }
+
+/* ---------- HERO ---------- */
+.hero { padding: clamp(3rem, 8vh, 6rem) 0 clamp(2.5rem, 6vh, 4rem); }
+.hero__grid {
+  display: grid;
+  grid-template-columns: 1.05fr 1.1fr;
+  gap: clamp(1.5rem, 4vw, 3.5rem);
   align-items: center;
+}
+.hero__headline {
+  font-size: clamp(2.6rem, 1.7rem + 4vw, 5rem);
+  margin: 1rem 0 0;
+}
+.hero__headline .x { color: var(--faint); font-weight: 500; }
+.hero__role {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+  margin: 1.1rem 0 0;
+}
+.hero__meta { margin: 0.5rem 0 0; }
+.hero__intro { max-width: 40ch; margin: 1.25rem 0 0; color: #30333b; }
+.hero__cta { display: flex; gap: 0.75rem; margin-top: 1.75rem; flex-wrap: wrap; }
+
+.btn {
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.02em;
+  padding: 0.7rem 1.1rem;
+  border: 1.5px solid var(--ink);
+  background: var(--ink);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.btn:hover { background: var(--accent); border-color: var(--accent); }
+.btn--ghost { background: transparent; color: var(--ink); }
+.btn--ghost:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* graph lives in a quiet framed panel, like a figure */
+.hero__figure {
+  position: relative;
+  border: 1px solid var(--line-strong);
+  border-radius: 10px;
+  background: var(--surface);
+  height: clamp(360px, 54vh, 540px);
+  overflow: hidden;
+}
+.hero__figcap {
+  position: absolute;
+  left: 14px;
+  bottom: 12px;
+  display: flex;
+  gap: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
   color: var(--muted);
-  font-size: 0.85rem;
   pointer-events: none;
 }
-.legend {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-.legend::before {
-  content: '';
-  width: 9px;
-  height: 9px;
-  border-radius: 50%;
-  background: var(--dot, var(--muted));
-}
-.legend.neuro { --dot: var(--neuro); }
-.legend.venture { --dot: var(--venture); }
-.legend.ai { --dot: var(--ai); }
+.legend { display: inline-flex; align-items: center; gap: 0.4rem; }
+.legend::before { content: ''; width: 8px; height: 8px; border-radius: 50%; background: var(--d, var(--muted)); }
+.legend.neuro { --d: var(--neuro); }
+.legend.venture { --d: var(--venture); }
+.legend.ai { --d: var(--ai); }
 
-.hint {
-  flex-basis: 100%;
-  color: var(--muted);
-  opacity: 0.8;
-}
-
-@media (max-width: 640px) {
-  .hero__id { max-width: none; right: clamp(1.25rem, 5vw, 4.5rem); }
+@media (max-width: 820px) {
+  .hero__grid { grid-template-columns: 1fr; }
+  .hero__figure { order: 2; }
 }
