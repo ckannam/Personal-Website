@@ -1,0 +1,32 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+
+interface Props {
+  entry: CollectionEntry<'nodes'>;
+}
+const { entry } = Astro.props;
+const { id, title, lobe, status, href } = entry.data;
+const { Content } = await render(entry);
+
+const linkLabel: Record<string, string> = {
+  'wilcox-jaacap': 'Read the paper',
+};
+---
+
+<article class={`card reveal card--${lobe}`} id={`node-${id}`}>
+  <header class="card__head">
+    <span class={`card__dot card__dot--${lobe}`} aria-hidden="true"></span>
+    <h3 class="card__title">{title}</h3>
+  </header>
+  {status && <p class="card__status">{status}</p>}
+  <div class="card__body">
+    <Content />
+  </div>
+  {
+    href && (
+      <a class="card__link" href={href} target="_blank" rel="noopener">
+        {linkLabel[id] ?? 'View'} ↗
+      </a>
+    )
+  }
+</article>

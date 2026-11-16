@@ -1,18 +1,50 @@
 ---
 import Base from '../layouts/Base.astro';
 import GraphHero from '../components/GraphHero.tsx';
+import NodeCard from '../components/NodeCard.astro';
+import { getCollection, render } from 'astro:content';
 import { buildGraph } from '../data/graph';
 
-const { nodes, links } = await buildGraph();
+const { nodes: gNodes, links } = await buildGraph();
+
+const nodes = await getCollection('nodes');
+const chapters = await getCollection('chapters');
+const bySlug = (s: string) => chapters.find((c) => c.data.slug === s)!;
+
+const ORDER = [
+  'duke-neuro-chem',
+  'fmri',
+  'marsh-thesis',
+  'wilcox-jaacap',
+  'cipher-poster',
+  'ushipping',
+  'jhtv-pitchbook',
+  'atp',
+  'second-brain',
+];
+const rank = (id: string) => ORDER.indexOf(id);
+const inLobe = (l: string) =>
+  nodes.filter((n) => n.data.lobe === l).sort((a, b) => rank(a.data.id) - rank(b.data.id));
+
+const research = inLobe('neuro');
+const ventures = [...inLobe('venture'), ...inLobe('ai')];
+
+const whoIAm = await render(bySlug('who-i-am'));
+const theNeuroscience = await render(bySlug('the-neuroscience'));
+const howIThink = await render(bySlug('how-i-think'));
+const whereTheyMeet = await render(bySlug('where-they-meet'));
 ---
 
 <Base>
+  <a class="skip" href="#top">Skip to content</a>
+
   <nav class="nav">
     <div class="nav__in">
       <a class="nav__brand" href="#top">Cole Kannam<span class="nav__tag">NEURO × AI</span></a>
       <div class="nav__links">
-        <a href="#work">Work</a>
         <a href="#research">Research</a>
+        <a href="#work">Ventures</a>
+        <a href="#contact">Contact</a>
         <a href="/assets/Cole_Kannam_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
       </div>
     </div>
@@ -29,13 +61,13 @@ const { nodes, links } = await buildGraph();
           seat I sit in. Everything I've done is one connected story.
         </p>
         <div class="hero__cta">
-          <a class="btn" href="#work">See the work</a>
+          <a class="btn" href="#research">See the work</a>
           <a class="btn btn--ghost" href="/assets/Cole_Kannam_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
         </div>
       </div>
 
       <figure class="hero__figure">
-        <GraphHero client:only="react" nodes={nodes} links={links} />
+        <GraphHero client:only="react" nodes={gNodes} links={links} />
         <figcaption class="hero__figcap">
           <span class="legend neuro">Neuroscience</span>
           <span class="legend venture">Ventures</span>
@@ -44,4 +76,45 @@ const { nodes, links } = await buildGraph();
       </figure>
     </div>
   </header>
+
+  <section class="band">
+    <div class="wrap band__in reveal">
+      <whoIAm.Content />
+    </div>
+  </section>
+
+  <section id="research" class="section">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2>Research</h2>
+        <div class="section__lede"><theNeuroscience.Content /></div>
+      </div>
+      <div class="cards">
+        {research.map((entry) => <NodeCard entry={entry} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="band band--accent">
+    <div class="wrap band__in reveal">
+      <whereTheyMeet.Content />
+    </div>
+  </section>
+
+  <section id="work" class="section">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2>Ventures &amp; building</h2>
+        <div class="section__lede"><howIThink.Content /></div>
+      </div>
+      <div class="cards">
+        {ventures.map((entry) => <NodeCard entry={entry} />)}
+      </div>
+    </div>
+  </section>
+
+  <script>
+    import { initReveals } from '../scripts/reveal.mjs';
+    initReveals();
+  </script>
 </Base>
