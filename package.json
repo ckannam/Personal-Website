@@ -11,6 +11,7 @@
     "preview": "astro preview",
     "astro": "astro",
     "sync": "node scripts/publish-gate.mjs",
+    "pretest": "astro build",
     "test": "node --test"
   },
   "dependencies": {
