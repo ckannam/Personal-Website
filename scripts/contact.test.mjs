@@ -13,8 +13,8 @@ function html() {
   return readFileSync(DIST, 'utf8');
 }
 
-test('contact: email is a mailto link to the Duke address', () => {
-  assert.match(html(), /mailto:cole\.kannam@duke\.edu/);
+test('contact: the Duke email address is present (click-to-copy)', () => {
+  assert.match(html(), /cole\.kannam@duke\.edu/);
 });
 
 test('contact: résumé is linked for viewing/download', () => {

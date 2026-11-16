@@ -6,7 +6,6 @@ const contact = chapters.find((c) => c.data.slug === 'contact')!;
 const { Content } = await render(contact);
 
 // Phone is stored base64-encoded so the raw digits never appear in the HTML source.
-// A click decodes it into a tel: link — scraper-resistant to naive harvesters.
 const phoneB64 = Buffer.from('443-682-2254').toString('base64');
 ---
 
@@ -18,11 +17,19 @@ const phoneB64 = Buffer.from('443-682-2254').toString('base64');
     <dl class="contact__list">
       <div class="contact__row">
         <dt>Email</dt>
-        <dd><a href="mailto:cole.kannam@duke.edu">cole.kannam@duke.edu</a></dd>
+        <dd>
+          <button class="copy" type="button" data-copy="cole.kannam@duke.edu" data-label="Email">
+            cole.kannam@duke.edu
+          </button>
+        </dd>
       </div>
       <div class="contact__row">
         <dt>Phone</dt>
-        <dd><button class="phone" type="button" data-p={phoneB64}>Show number</button></dd>
+        <dd>
+          <button class="copy copy--phone" type="button" data-p={phoneB64} data-label="Number">
+            Show number
+          </button>
+        </dd>
       </div>
       <div class="contact__row">
         <dt>LinkedIn</dt>
@@ -42,21 +49,36 @@ const phoneB64 = Buffer.from('443-682-2254').toString('base64');
       </div>
     </dl>
   </div>
+
+  <div class="toast" role="status" aria-live="polite"></div>
 </section>
 
 <script>
-  document.querySelectorAll<HTMLButtonElement>('.phone').forEach((btn) => {
-    btn.addEventListener(
-      'click',
-      () => {
-        const num = atob(btn.dataset.p ?? '');
-        const a = document.createElement('a');
-        a.href = 'tel:+1' + num.replace(/\D/g, '');
-        a.textContent = num;
-        a.className = 'contact__tel';
-        btn.replaceWith(a);
-      },
-      { once: true },
-    );
+  const toast = document.querySelector<HTMLDivElement>('.toast');
+  let hideTimer: number | undefined;
+  function flash(message: string) {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.add('is-visible');
+    window.clearTimeout(hideTimer);
+    hideTimer = window.setTimeout(() => toast.classList.remove('is-visible'), 1800);
+  }
+  async function copyText(text: string, label: string) {
+    try {
+      await navigator.clipboard.writeText(text);
+      flash(`${label} copied`);
+    } catch {
+      flash('Copy failed — select and copy manually');
+    }
+  }
+  document.querySelectorAll<HTMLButtonElement>('.copy').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      let text = btn.dataset.copy ?? '';
+      if (btn.dataset.p) {
+        text = atob(btn.dataset.p);
+        btn.textContent = text; // reveal the number on first click
+      }
+      copyText(text, btn.dataset.label ?? 'Copied');
+    });
   });
 </script>

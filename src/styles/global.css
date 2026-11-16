@@ -289,14 +289,37 @@ a { color: inherit; text-decoration: none; }
 .contact__row a { border-bottom: 1.5px solid transparent; }
 .contact__row a:hover { border-color: var(--accent); color: var(--accent); }
 .contact .sep { color: var(--faint); margin: 0 0.4rem; }
-.phone {
+.copy {
   font: inherit;
   color: var(--accent);
   background: none;
   border: none;
-  border-bottom: 1.5px solid var(--accent);
+  border-bottom: 1.5px solid transparent;
   padding: 0;
   cursor: pointer;
+}
+.copy:hover { border-color: var(--accent); }
+
+/* copied-to-clipboard toast */
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 1.5rem;
+  transform: translate(-50%, 1rem);
+  background: var(--ink);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 50;
+}
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+@media (prefers-reduced-motion: reduce) {
+  .toast { transition: opacity 0.2s ease; transform: translate(-50%, 0); }
 }
 
 /* ---------- footer ---------- */
