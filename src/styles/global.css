@@ -322,6 +322,55 @@ a { color: inherit; text-decoration: none; }
   .toast { transition: opacity 0.2s ease; transform: translate(-50%, 0); }
 }
 
+/* ---------- resume page ---------- */
+.resume { padding: clamp(2.5rem, 7vh, 5rem) 0 clamp(3rem, 8vh, 6rem); }
+.resume__title { font-size: clamp(2.6rem, 2rem + 2.5vw, 4rem); }
+.resume__meta { margin: 1rem 0 0; color: var(--muted); }
+.resume__meta a { border-bottom: 1.5px solid transparent; }
+.resume__meta a:hover { border-color: var(--accent); color: var(--accent); }
+.resume__actions { display: flex; align-items: center; gap: 1.25rem; margin: 1.5rem 0 2.25rem; flex-wrap: wrap; }
+.resume__updated { font-family: var(--font-mono); font-size: 0.74rem; color: var(--faint); letter-spacing: 0.03em; }
+
+.rs-sheet {
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 12px;
+  padding: clamp(1.5rem, 4vw, 3rem);
+  max-width: 860px;
+}
+.rs-block { margin-bottom: 2.25rem; }
+.rs-block:last-child { margin-bottom: 0; }
+.rs-head {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  padding-bottom: 0.5rem;
+  border-bottom: 1.5px solid var(--line);
+  margin-bottom: 1.1rem;
+}
+.rs-entry { margin-bottom: 1.4rem; }
+.rs-entry:last-child { margin-bottom: 0; }
+.rs-entry__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  align-items: baseline;
+}
+.rs-entry__org { font-weight: 600; color: var(--ink); }
+.rs-entry__loc { font-weight: 600; color: var(--ink); white-space: nowrap; }
+.rs-entry__title { font-style: italic; color: #30333b; }
+.rs-entry__dates { font-style: italic; color: var(--muted); white-space: nowrap; }
+.rs-bullets { margin: 0.5rem 0 0; padding-left: 1.1rem; }
+.rs-bullets li { margin: 0.3rem 0; color: #30333b; }
+.rs-bullets li::marker { color: var(--accent); }
+@media (max-width: 560px) {
+  .rs-entry__row { flex-direction: column; gap: 0.1rem; }
+  .rs-entry__loc, .rs-entry__dates { white-space: normal; }
+}
+
 /* ---------- footer ---------- */
 .footer { border-top: 1px solid var(--line); padding: 2rem 0 3rem; }
 .footer__in { display: flex; justify-content: space-between; gap: 1rem; color: var(--muted); font-size: 0.9rem; }

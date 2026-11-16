@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
 import NodeCard from '../components/NodeCard.astro';
 import Contact from '../components/Contact.astro';
 import { getCollection, render } from 'astro:content';
@@ -35,17 +36,7 @@ const whereTheyMeet = await render(bySlug('where-they-meet'));
 <Base>
   <a class="skip" href="#top">Skip to content</a>
 
-  <nav class="nav">
-    <div class="nav__in">
-      <a class="nav__brand" href="#top">Cole Kannam<span class="nav__tag">NEURO × AI</span></a>
-      <div class="nav__links">
-        <a href="#work">Ventures</a>
-        <a href="#research">Research</a>
-        <a href="#contact">Contact</a>
-        <a href="/assets/Cole_Kannam_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
-      </div>
-    </div>
-  </nav>
+  <Nav />
 
   <header id="top" class="hero">
     <div class="wrap hero__grid">
@@ -59,7 +50,7 @@ const whereTheyMeet = await render(bySlug('where-they-meet'));
         </p>
         <div class="hero__cta">
           <a class="btn" href="#work">See the work</a>
-          <a class="btn btn--ghost" href="/assets/Cole_Kannam_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
+          <a class="btn btn--ghost" href="/resume">Résumé</a>
         </div>
       </div>
 

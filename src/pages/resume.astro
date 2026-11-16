@@ -1,0 +1,159 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+
+// Mirrors public/assets/Cole_Kannam_Resume.pdf. Keep the two in sync.
+const experience = [
+  {
+    org: 'Johns Hopkins Technology Ventures (JHTV)',
+    loc: 'Baltimore, MD',
+    title: 'Capital Strategy Intern',
+    dates: 'June 2026 –',
+    bullets: [
+      'Built internal tech-to-VC and tech-to-funding matching tools that accelerate investor outreach and align bench-stage discoveries with the right capital sources',
+      'Map and engage venture capital, corporate, and philanthropic funders to identify capital pathways for early-stage Hopkins technologies and spinouts',
+      'Designed a Karpathy-inspired self-updating, self-healing wiki and query engine that turns scattered technology, funder, and deal knowledge into durable long-term context for AI models, raising research speed and output quality',
+      'Translate scientific research into investment-ready narratives and support due diligence, market positioning, and strategic outreach across the translational funding pipeline',
+    ],
+  },
+  {
+    org: 'UShipping',
+    loc: 'Durham, NC',
+    title: 'Co-Owner and Co-CEO',
+    dates: 'September 2023 –',
+    bullets: [
+      'Driving end-to-end operations of a six-figure annual business—owning capacity planning, driver/vendor scheduling, low-clearance routing, and real-time issue triage; expanded to Columbia University’s campus, where the business began generating revenue',
+      'Spearheaded the launch of out-of-route shipping, a new service line serving students outside standard pickup zones, growing fall sign-ups ~80% over the prior fall',
+      'Coordinating cross-stakeholder communications (students, parents, Duke officials) and standardizing web/email/SMS messaging to present a clear, credible service',
+    ],
+  },
+  {
+    org: 'Athletic Training Portal',
+    loc: 'Durham, NC',
+    title: 'Head of Strategy',
+    dates: 'August 2026 –',
+    bullets: [
+      'Own competitive, market, and non-dilutive funding strategy for an early-stage sports medicine startup whose single-camera platform baselines each athlete’s movement to flag injury risk—built the competitive landscape and FDA-conscious positioning, and map federal and defense funding beyond an active Navy SBIR and Duke football contract',
+    ],
+  },
+  {
+    org: 'Wilcox Lab',
+    loc: 'Baltimore, MD',
+    title: 'Research Assistant',
+    dates: 'May 2025 –',
+    bullets: [
+      'Published author in the Journal of the American Academy of Child and Adolescent Psychiatry; conducting Johns Hopkins psychological autopsy research to identify patterns in teen suicide cases',
+    ],
+  },
+  {
+    org: 'Marsh Memory Lab',
+    loc: 'Durham, NC',
+    title: 'Research Assistant',
+    dates: 'September 2024 –',
+    bullets: [
+      'Completing an honors thesis in Duke’s Marsh Memory Lab: designed a three-condition metacognition experiment (illusion of explanatory depth), running repeated-measures data collection and analysis',
+    ],
+  },
+];
+
+const leadership = [
+  {
+    org: 'NeuroTech Consulting Club',
+    loc: 'Durham, NC',
+    title: 'Lead Consultant',
+    dates: 'August 2025 –',
+    bullets: [
+      'Partnering with Duke labs and Durham neurotech startups to translate science into product and go-to-market; contributing market sizing, stakeholder mapping, and pilot design',
+    ],
+  },
+  {
+    org: 'Duke Shave and Buzz',
+    loc: 'Durham, NC',
+    title: 'Sponsorship Chair and Liaison',
+    dates: 'March 2024 –',
+    bullets: ['Raised over $380,000 that supports adolescent cancer research at Duke University Medical Center'],
+  },
+];
+---
+
+<Base title="Cole Kannam — Résumé">
+  <a class="skip" href="#resume-top">Skip to content</a>
+  <Nav />
+
+  <main id="resume-top" class="resume">
+    <div class="wrap">
+      <h1 class="resume__title">Résumé</h1>
+      <p class="resume__meta">
+        Baltimore, MD (open to relocation) · cole.kannam@duke.edu ·
+        <a href="https://www.linkedin.com/in/cole-kannam-960238300/" target="_blank" rel="noopener">LinkedIn</a>
+      </p>
+      <div class="resume__actions">
+        <a class="btn" href="/assets/Cole_Kannam_Resume.pdf" download>Download PDF</a>
+        <span class="resume__updated">UPDATED NOVEMBER 2026</span>
+      </div>
+
+      <article class="rs-sheet">
+        <section class="rs-block">
+          <h2 class="rs-head">Education</h2>
+          <div class="rs-entry">
+            <div class="rs-entry__row">
+              <span class="rs-entry__org">Duke University, Trinity College of Arts and Sciences</span>
+              <span class="rs-entry__loc">Durham, NC</span>
+            </div>
+            <div class="rs-entry__row">
+              <span class="rs-entry__title">B.S. in Neuroscience and Statistics; Minor in Chemistry and I&amp;E</span>
+              <span class="rs-entry__dates">Expected Graduation May 2027</span>
+            </div>
+            <ul class="rs-bullets">
+              <li>GPA: 3.91/4.0</li>
+              <li>Activities: Mission Brain, Pi Kappa Alpha Recruitment Chair, Phi Delta Epsilon, South Indian Club</li>
+              <li>Skills: Claude Code; Obsidian; Python; n8n workflows; collaboration &amp; communication; project coordination</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="rs-block">
+          <h2 class="rs-head">Work Experience</h2>
+          {
+            experience.map((e) => (
+              <div class="rs-entry">
+                <div class="rs-entry__row">
+                  <span class="rs-entry__org">{e.org}</span>
+                  <span class="rs-entry__loc">{e.loc}</span>
+                </div>
+                <div class="rs-entry__row">
+                  <span class="rs-entry__title">{e.title}</span>
+                  <span class="rs-entry__dates">{e.dates}</span>
+                </div>
+                <ul class="rs-bullets">
+                  {e.bullets.map((b) => <li>{b}</li>)}
+                </ul>
+              </div>
+            ))
+          }
+        </section>
+
+        <section class="rs-block">
+          <h2 class="rs-head">Leadership &amp; Extracurricular Experience</h2>
+          {
+            leadership.map((e) => (
+              <div class="rs-entry">
+                <div class="rs-entry__row">
+                  <span class="rs-entry__org">{e.org}</span>
+                  <span class="rs-entry__loc">{e.loc}</span>
+                </div>
+                <div class="rs-entry__row">
+                  <span class="rs-entry__title">{e.title}</span>
+                  <span class="rs-entry__dates">{e.dates}</span>
+                </div>
+                <ul class="rs-bullets">
+                  {e.bullets.map((b) => <li>{b}</li>)}
+                </ul>
+              </div>
+            ))
+          }
+        </section>
+      </article>
+    </div>
+  </main>
+</Base>
