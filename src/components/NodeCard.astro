@@ -10,10 +10,13 @@ const { Content } = await render(entry);
 
 const linkLabel: Record<string, string> = {
   'wilcox-jaacap': 'Read the paper',
+  'cipher-poster': 'Read the poster',
+  'jhtv-pitchbook': 'Open the tool',
+  'ushipping': 'Visit the site',
 };
 ---
 
-<article class={`card reveal card--${lobe}`} id={`node-${id}`}>
+<article class={`card reveal card--${lobe} ${href ? 'card--link' : ''}`} id={`node-${id}`}>
   <header class="card__head">
     <span class={`card__dot card__dot--${lobe}`} aria-hidden="true"></span>
     <h3 class="card__title">{title}</h3>

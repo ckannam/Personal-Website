@@ -7,6 +7,7 @@ status: Capital Strategy Intern
 blurb: >-
   Translating Hopkins science into investment-ready narratives — and a tool that
   matches each technology to the right investors.
+href: 'https://ckannam.github.io/VC_Matching_Second_Brain/#/'
 connects:
   - second-brain
 ---

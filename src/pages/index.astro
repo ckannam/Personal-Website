@@ -10,9 +10,9 @@ const bySlug = (s: string) => chapters.find((c) => c.data.slug === s)!;
 
 const ORDER = [
   'duke-neuro-chem',
-  'fmri',
-  'marsh-thesis',
   'wilcox-jaacap',
+  'marsh-thesis',
+  'fmri',
   'cipher-poster',
   'ushipping',
   'jhtv-pitchbook',
@@ -39,8 +39,8 @@ const whereTheyMeet = await render(bySlug('where-they-meet'));
     <div class="nav__in">
       <a class="nav__brand" href="#top">Cole Kannam<span class="nav__tag">NEURO × AI</span></a>
       <div class="nav__links">
-        <a href="#research">Research</a>
         <a href="#work">Ventures</a>
+        <a href="#research">Research</a>
         <a href="#contact">Contact</a>
         <a href="/assets/Cole_Kannam_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
       </div>
@@ -50,7 +50,7 @@ const whereTheyMeet = await render(bySlug('where-they-meet'));
   <header id="top" class="hero">
     <div class="wrap hero__grid">
       <div>
-        <p class="eyebrow">DUKE NEUROSCIENCE + CHEMISTRY '27 · BALTIMORE</p>
+        <p class="eyebrow">DUKE NEUROSCIENCE '27 · BALTIMORE</p>
         <h1 class="hero__headline">Neuro <span class="x">×</span> AI</h1>
         <p class="hero__role">Neuroscientist who builds.</p>
         <p class="hero__intro">
@@ -58,7 +58,7 @@ const whereTheyMeet = await render(bySlug('where-they-meet'));
           seat I sit in. Everything I've done is one connected story.
         </p>
         <div class="hero__cta">
-          <a class="btn" href="#research">See the work</a>
+          <a class="btn" href="#work">See the work</a>
           <a class="btn btn--ghost" href="/assets/Cole_Kannam_Resume.pdf" target="_blank" rel="noopener">Résumé</a>
         </div>
       </div>
@@ -82,24 +82,6 @@ const whereTheyMeet = await render(bySlug('where-they-meet'));
     </div>
   </section>
 
-  <section id="research" class="section">
-    <div class="wrap">
-      <div class="section__head reveal">
-        <h2>Research</h2>
-        <div class="section__lede"><theNeuroscience.Content /></div>
-      </div>
-      <div class="cards">
-        {research.map((entry) => <NodeCard entry={entry} />)}
-      </div>
-    </div>
-  </section>
-
-  <section class="band band--accent">
-    <div class="wrap band__in reveal">
-      <whereTheyMeet.Content />
-    </div>
-  </section>
-
   <section id="work" class="section">
     <div class="wrap">
       <div class="section__head reveal">
@@ -112,15 +94,33 @@ const whereTheyMeet = await render(bySlug('where-they-meet'));
     </div>
   </section>
 
+  <section class="band band--accent">
+    <div class="wrap band__in reveal">
+      <whereTheyMeet.Content />
+    </div>
+  </section>
+
+  <section id="research" class="section">
+    <div class="wrap">
+      <div class="section__head reveal">
+        <h2>Research</h2>
+        <div class="section__lede"><theNeuroscience.Content /></div>
+      </div>
+      <div class="cards">
+        {research.map((entry) => <NodeCard entry={entry} />)}
+      </div>
+    </div>
+  </section>
+
   <section id="about" class="section about">
     <div class="wrap about__single reveal">
       <div>
         <h2>About</h2>
         <p>
-          I'm a Duke senior from Baltimore studying neuroscience and chemistry. I came for
-          medicine and stayed for how the brain actually works — then learned to build with AI
-          on top of it. I care about doing real science and shipping real things, and I don't
-          think you have to choose.
+          I'm a Duke senior from Baltimore studying neuroscience, with minors in chemistry and
+          entrepreneurship. I came for medicine and stayed for how the brain actually works —
+          then learned to build with AI on top of it. I care about doing real science and
+          shipping real things, and I don't think you have to choose.
         </p>
         <p>
           Away from the desk: soccer (Chelsea, for my sins), golf in the low 90s, and a steady
