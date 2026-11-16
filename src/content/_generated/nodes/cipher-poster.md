@@ -7,6 +7,7 @@ status: First-author poster · Duke Anesthesiology
 blurb: >-
   Linking preoperative brain microstructure to EEG response under anesthesia and
   postoperative delirium.
+href: /assets/cipher-poster.pdf
 connects:
   - fmri
   - duke-neuro-chem

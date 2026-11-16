@@ -12,7 +12,7 @@ const nodes = defineCollection({
     lobe: z.enum(['neuro', 'venture', 'ai']),
     status: z.string().optional(),
     blurb: z.string(),
-    href: z.string().url().optional(),
+    href: z.string().optional(), // absolute URL or site-relative path (e.g. /assets/…pdf)
     connects: z.array(z.string()).default([]),
   }),
 });
