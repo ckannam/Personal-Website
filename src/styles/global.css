@@ -197,6 +197,18 @@ a { color: inherit; text-decoration: none; }
 .section__lede { margin-top: 0.75rem; color: var(--muted); }
 .section__lede :global(p) { margin: 0; }
 
+/* ---------- what's next ---------- */
+.next { border-top: 1px solid var(--line); background: var(--accent-soft); }
+.next__in { max-width: 48ch; }
+.next__headline {
+  font-size: clamp(1.7rem, 1.3rem + 1.6vw, 2.6rem);
+  line-height: 1.12;
+  margin: 0.9rem 0 0;
+  color: #241a45;
+}
+.next__body { margin: 1.25rem 0 0; color: #3b3560; }
+.next__body em { color: var(--muted); font-style: italic; }
+
 /* ---------- cards ---------- */
 .cards {
   display: grid;
