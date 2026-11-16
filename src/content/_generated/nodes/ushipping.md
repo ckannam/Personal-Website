@@ -7,6 +7,7 @@ status: Co-owner & operator
 blurb: >-
   A six-figure student shipping-and-storage business I co-own and run at Duke,
   now expanding to new campuses.
+href: 'https://www.universityshipping.com/'
 connects:
   - second-brain
 ---

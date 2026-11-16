@@ -7,6 +7,7 @@ status: Strategy & non-dilutive funding
 blurb: >-
   Markerless motion capture for athlete injury-risk, where I own competitive
   strategy and federal funding.
+href: 'https://www.atp-data.com/'
 connects:
   - second-brain
 ---
