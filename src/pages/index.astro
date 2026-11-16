@@ -1,12 +1,8 @@
 ---
 import Base from '../layouts/Base.astro';
-import GraphHero from '../components/GraphHero.tsx';
 import NodeCard from '../components/NodeCard.astro';
 import Contact from '../components/Contact.astro';
 import { getCollection, render } from 'astro:content';
-import { buildGraph } from '../data/graph';
-
-const { nodes: gNodes, links } = await buildGraph();
 
 const nodes = await getCollection('nodes');
 const chapters = await getCollection('chapters');
@@ -68,12 +64,14 @@ const whereTheyMeet = await render(bySlug('where-they-meet'));
       </div>
 
       <figure class="hero__figure">
-        <GraphHero client:only="react" nodes={gNodes} links={links} />
-        <figcaption class="hero__figcap">
-          <span class="legend neuro">Neuroscience</span>
-          <span class="legend venture">Ventures</span>
-          <span class="legend ai">AI</span>
-        </figcaption>
+        <img
+          class="hero__photo"
+          src="/assets/cole-headshot.png"
+          width="592"
+          height="580"
+          alt="Cole Kannam"
+          fetchpriority="high"
+        />
       </figure>
     </div>
   </header>
@@ -115,15 +113,7 @@ const whereTheyMeet = await render(bySlug('where-they-meet'));
   </section>
 
   <section id="about" class="section about">
-    <div class="wrap about__grid reveal">
-      <img
-        class="about__photo"
-        src="/assets/cole-headshot.png"
-        width="260"
-        height="260"
-        alt="Cole Kannam"
-        loading="lazy"
-      />
+    <div class="wrap about__single reveal">
       <div>
         <h2>About</h2>
         <p>
