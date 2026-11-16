@@ -1,25 +1,33 @@
 ---
-// Placeholder page — the identity line must render before any animation (Global Constraint).
-const identity = "Neuro × AI — A Duke Senior's Journey";
+import Base from '../layouts/Base.astro';
+import GraphHero from '../components/GraphHero.tsx';
+import { buildGraph } from '../data/graph';
+
+const { nodes, links } = await buildGraph();
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Cole Kannam — Neuro × AI</title>
-		<meta
-			name="description"
-			content="Cole Kannam — a neuroscientist who drives AI impact in every seat he sits in."
-		/>
-	</head>
-	<body>
-		<main>
-			<p class="eyebrow">Cole Kannam</p>
-			<h1>{identity}</h1>
-		</main>
-	</body>
-</html>
+<Base>
+  <section class="hero">
+    <div class="hero__graph">
+      <GraphHero client:only="react" nodes={nodes} links={links} />
+    </div>
+
+    <div class="hero__id">
+      <p class="hero__name">Cole Kannam</p>
+      <h1 class="hero__headline">
+        <span class="neuro">Neuro</span> × <span class="ai">AI</span>
+      </h1>
+      <p class="hero__sub">
+        A neuroscientist who brings AI into every room he's in. Published brain research,
+        a company, venture work — one connected story.
+      </p>
+    </div>
+
+    <div class="hero__foot">
+      <span class="legend neuro">Neuroscience</span>
+      <span class="legend venture">Ventures</span>
+      <span class="legend ai">AI</span>
+      <span class="hint">Drag a node. Click one to read its story.</span>
+    </div>
+  </section>
+</Base>
