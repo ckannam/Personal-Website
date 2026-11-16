@@ -10,4 +10,4 @@ blurb: >-
 connects:
   - second-brain
 ---
-I co-own and operate University Shipping & Storage, a six-figure door-to-dorm shipping and storage business, and I own its communications and end-to-end operations — capacity, driver and vendor scheduling, routing, and triage. The margins made me ask why it didn't exist on every campus, so we rebuilt the model to travel and expanded beyond Duke. My cofounder and I now run much of it on an AI operating system.
+I co-own and operate University Shipping & Storage, a six-figure door-to-dorm shipping and storage business, and I own its communications and end-to-end operations — capacity, driver and vendor scheduling, routing, and triage. The margins made me ask why it didn't exist on every campus, so we rebuilt the model to travel and expanded beyond Duke. We now run much of it on an AI operating system.
