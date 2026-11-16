@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import GraphHero from '../components/GraphHero.tsx';
 import NodeCard from '../components/NodeCard.astro';
+import Contact from '../components/Contact.astro';
 import { getCollection, render } from 'astro:content';
 import { buildGraph } from '../data/graph';
 
@@ -112,6 +113,41 @@ const whereTheyMeet = await render(bySlug('where-they-meet'));
       </div>
     </div>
   </section>
+
+  <section id="about" class="section about">
+    <div class="wrap about__grid reveal">
+      <img
+        class="about__photo"
+        src="/assets/cole-headshot.png"
+        width="260"
+        height="260"
+        alt="Cole Kannam"
+        loading="lazy"
+      />
+      <div>
+        <h2>About</h2>
+        <p>
+          I'm a Duke senior from Baltimore studying neuroscience and chemistry. I came for
+          medicine and stayed for how the brain actually works — then learned to build with AI
+          on top of it. I care about doing real science and shipping real things, and I don't
+          think you have to choose.
+        </p>
+        <p>
+          Away from the desk: soccer (Chelsea, for my sins), golf in the low 90s, and a steady
+          diet of cerebral films and stand-up.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <Contact />
+
+  <footer class="footer">
+    <div class="wrap footer__in">
+      <span>Cole Kannam</span>
+      <span class="footer__meta">Baltimore · Neuro × AI</span>
+    </div>
+  </footer>
 
   <script>
     import { initReveals } from '../scripts/reveal.mjs';

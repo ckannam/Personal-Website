@@ -1,0 +1,54 @@
+---
+import { getCollection, render } from 'astro:content';
+
+const chapters = await getCollection('chapters');
+const contact = chapters.find((c) => c.data.slug === 'contact')!;
+const { Content } = await render(contact);
+
+// Phone is stored base64-encoded so the raw digits never appear in the HTML source.
+// A click decodes it into a tel: link — scraper-resistant to naive harvesters.
+const phoneB64 = Buffer.from('443-682-2254').toString('base64');
+---
+
+<section id="contact" class="section contact">
+  <div class="wrap reveal">
+    <h2>Contact</h2>
+    <div class="contact__lede"><Content /></div>
+
+    <dl class="contact__list">
+      <div class="contact__row">
+        <dt>Email</dt>
+        <dd><a href="mailto:cole.kannam@duke.edu">cole.kannam@duke.edu</a></dd>
+      </div>
+      <div class="contact__row">
+        <dt>Phone</dt>
+        <dd><button class="phone" type="button" data-p={phoneB64}>Show number</button></dd>
+      </div>
+      <div class="contact__row">
+        <dt>Résumé</dt>
+        <dd>
+          <a href="/assets/Cole_Kannam_Resume.pdf" target="_blank" rel="noopener">View</a>
+          <span class="sep">·</span>
+          <a href="/assets/Cole_Kannam_Resume.pdf" download>Download</a>
+        </dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.phone').forEach((btn) => {
+    btn.addEventListener(
+      'click',
+      () => {
+        const num = atob(btn.dataset.p ?? '');
+        const a = document.createElement('a');
+        a.href = 'tel:+1' + num.replace(/\D/g, '');
+        a.textContent = num;
+        a.className = 'contact__tel';
+        btn.replaceWith(a);
+      },
+      { once: true },
+    );
+  });
+</script>
