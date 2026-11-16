@@ -10,7 +10,8 @@ const phoneB64 = Buffer.from('443-682-2254').toString('base64');
 ---
 
 <section id="contact" class="section contact">
-  <div class="wrap reveal">
+  <div class="wrap contact__grid reveal">
+   <div class="contact__main">
     <h2>Contact</h2>
     <div class="contact__lede"><Content /></div>
 
@@ -48,6 +49,16 @@ const phoneB64 = Buffer.from('443-682-2254').toString('base64');
         </dd>
       </div>
     </dl>
+   </div>
+
+    <img
+      class="contact__photo"
+      src="/assets/cole-headshot.png"
+      width="592"
+      height="580"
+      alt="Cole Kannam"
+      loading="lazy"
+    />
   </div>
 
   <div class="toast" role="status" aria-live="polite"></div>
