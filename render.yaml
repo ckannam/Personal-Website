@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: cole-kannam
+    runtime: static
+    # Render's cloud build cannot read the private vault, so it builds from the
+    # already-committed, publish-gated content in src/content/_generated.
+    # Run `npm run sync` locally before pushing when vault content changes.
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
+    pullRequestPreviewsEnabled: false
+    headers:
+      - path: /*
+        name: X-Frame-Options
+        value: SAMEORIGIN
+      - path: /*
+        name: X-Content-Type-Options
+        value: nosniff

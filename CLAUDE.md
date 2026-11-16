@@ -40,5 +40,12 @@ prior vanilla build (Clash Display / General Sans / IBM Plex Mono are fair game)
   (`public/assets/Cole_Kannam_Resume.pdf`).
 
 ## Deploy
-GitHub repo `ckannam/Personal-Website` → Render Static Site. Build: `npm run sync && npm run
-build`; publish dir `dist`. See `render.yaml`.
+GitHub repo `ckannam/Personal-Website` → Render Static Site (blueprint in `render.yaml`).
+Render build: `npm ci && npm run build`, publish dir `dist`. Render **cannot** read the
+private vault, so it builds from the committed, gated content in `src/content/_generated/`.
+
+**When vault `Portfolio/` content changes:** run `npm run sync` locally, commit the updated
+`src/content/_generated/`, then push. That is the only way new/edited public content reaches
+the live site. Node pinned via `.node-version` (22).
+
+Local preview: `npm run dev` → http://localhost:4321/
