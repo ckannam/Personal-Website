@@ -8,6 +8,10 @@ const {
   title = 'Cole Kannam — Neuro × AI',
   description = 'Cole Kannam — a neuroscientist who drives AI impact in every seat he sits in.',
 } = Astro.props;
+
+// Absolute URLs for canonical + social cards (Astro.site = https://colekannam.com)
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/assets/cole-headshot.png', Astro.site).href;
 ---
 
 <!doctype html>
@@ -18,9 +22,19 @@ const {
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="592" />
+    <meta property="og:image:height" content="580" />
+    <meta property="og:image:alt" content="Cole Kannam" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <meta name="theme-color" content="#f7f8fa" />
     <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
